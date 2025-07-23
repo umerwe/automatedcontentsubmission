@@ -3,117 +3,165 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Users, Trophy, Video, ArrowRight, Target, Sparkles, Zap, Globe, Brain, Rocket } from "lucide-react"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Users,ArrowRight,Star,Award, PlayCircle, MessageSquare, BookOpen, ChevronRight, FileText, Gauge, LayoutDashboard, Bot, ShieldCheck, FileSearch, ClipboardCheck, FileInput, FileOutput, FileBarChart2, FileDigit, FileCode, FileSpreadsheet, FileKey, FilePieChart, FileClock, FileHeart } from 'lucide-react'
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { motion } from "framer-motion"
+import { Typewriter } from 'react-simple-typewriter'
 
 export default function HomePage() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  useEffect(() => {
-    setIsLoaded(true)
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
-
   const stats = [
-    { label: "Global Teams", value: "2.5K+", icon: Users, gradient: "from-violet-500 to-purple-600" },
-    { label: "AI Evaluators", value: "150+", icon: Brain, gradient: "from-cyan-500 to-blue-600" },
-    { label: "Video Submissions", value: "8.9K+", icon: Video, gradient: "from-pink-500 to-rose-600" },
-    { label: "Prize Pool", value: "$50K", icon: Trophy, gradient: "from-amber-500 to-orange-600" },
+    { label: "Evaluated Submissions", value: "24,892", change: "+18%", icon: Award, color: "from-indigo-500 to-blue-500" },
+    { label: "Active Evaluators", value: "1,428", change: "+12%", icon: Users, color: "from-emerald-500 to-teal-500" },
+    { label: "Average Rating", value: "4.8/5", change: "+0.2", icon: Star, color: "from-amber-500 to-orange-500" },
+    { label: "Evaluation Speed", value: "2.4h", change: "-0.8h", icon: Gauge, color: "from-purple-500 to-pink-500" },
   ]
 
   const features = [
     {
-      title: "AI-Powered Evaluation",
-      description:
-        "Advanced machine learning algorithms provide instant, accurate assessments with human-level precision",
-      icon: Brain,
-      gradient: "from-violet-600 via-purple-600 to-indigo-600",
-      delay: "0ms",
+      title: "AI-Powered Analysis",
+      description: "Our advanced algorithms evaluate content with human-level precision across multiple dimensions",
+      icon: Bot,
+      color: "from-indigo-500 to-blue-600",
     },
     {
-      title: "Real-time Collaboration",
-      description:
-        "Seamless team collaboration with live editing, instant feedback, and synchronized progress tracking",
-      icon: Zap,
-      gradient: "from-cyan-500 via-blue-500 to-indigo-500",
-      delay: "100ms",
+      title: "Multi-Criteria Scoring",
+      description: "Comprehensive rubric-based assessment with detailed breakdowns",
+      icon: ClipboardCheck,
+      color: "from-emerald-500 to-teal-600",
     },
     {
-      title: "Global Recognition",
-      description: "Compete with the world's brightest minds and gain recognition from industry leaders worldwide",
-      icon: Globe,
-      gradient: "from-emerald-500 via-teal-500 to-cyan-500",
-      delay: "200ms",
+      title: "Plagiarism Detection",
+      description: "Enterprise-grade similarity checking across academic databases",
+      icon: ShieldCheck,
+      color: "from-amber-500 to-orange-600",
+    },
+    {
+      title: "Real-time Feedback",
+      description: "Instant evaluation results with actionable improvement suggestions",
+      icon: FileBarChart2,
+      color: "from-purple-500 to-pink-600",
+    },
+    {
+      title: "Bias Mitigation",
+      description: "Proprietary algorithms ensure fair, consistent evaluations",
+      icon: FileSearch,
+      color: "from-rose-500 to-red-600",
+    },
+    {
+      title: "Detailed Analytics",
+      description: "Performance tracking and benchmarking against peers",
+      icon: FileSpreadsheet,
+      color: "from-violet-500 to-purple-600",
     },
   ]
 
-  const timeline = [
-    { phase: "Registration", date: "Jan 1 - Feb 15", status: "active", icon: Users },
-    { phase: "Innovation", date: "Jan 15 - Mar 31", status: "upcoming", icon: Rocket },
-    { phase: "Evaluation", date: "Apr 1 - Apr 15", status: "upcoming", icon: Target },
-    { phase: "Victory", date: "Apr 30", status: "upcoming", icon: Trophy },
+  const workflow = [
+    { 
+      step: "1. Content Submission", 
+      description: "Upload documents, videos, or code through our secure portal", 
+      icon: FileInput,
+      color: "bg-blue-500"
+    },
+    { 
+      step: "2. Automated Processing", 
+      description: "Our system parses and prepares content for evaluation", 
+      icon: FileDigit,
+      color: "bg-indigo-500"
+    },
+    { 
+      step: "3. Multi-Layer Analysis", 
+      description: "AI evaluates structure, content quality, originality, and more", 
+      icon: FileCode,
+      color: "bg-purple-500"
+    },
+    { 
+      step: "4. Human Verification", 
+      description: "Expert reviewers validate and refine AI assessments", 
+      icon: FileSearch,
+      color: "bg-pink-500"
+    },
+    { 
+      step: "5. Results Delivery", 
+      description: "Receive comprehensive evaluation reports", 
+      icon: FileOutput,
+      color: "bg-emerald-500"
+    },
+  ]
+
+  const testimonials = [
+    {
+      name: "Dr. Sarah Chen",
+      role: "Computer Science Professor",
+      university: "Stanford University",
+      content: "This system has revolutionized how we evaluate student work. The AI provides remarkably nuanced feedback that complements our human grading perfectly.",
+      avatar: "SC",
+      rating: 5,
+    },
+    {
+      name: "Michael Rodriguez",
+      role: "Head of Academic Integrity",
+      university: "MIT",
+      content: "The plagiarism detection is the most sophisticated I&quot;ve seen. It catches subtle forms of academic dishonesty that other systems miss.",
+      avatar: "MR",
+      rating: 5,
+    },
+    {
+      name: "Alex Thompson",
+      role: "Graduate Researcher",
+      university: "UC Berkeley",
+      content: "The detailed feedback helped me improve my research papers significantly. I can see exactly where I need to focus to elevate my work.",
+      avatar: "AT",
+      rating: 5,
+    },
+  ]
+
+  const evaluationTypes = [
+    { name: "Academic Papers", count: "12,492 evaluations", icon: FileText, color: "bg-blue-500" },
+    { name: "Research Proposals", count: "8,742 evaluations", icon: FileSearch, color: "bg-indigo-500" },
+    { name: "Code Submissions", count: "6,921 evaluations", icon: FileCode, color: "bg-purple-500" },
+    { name: "Video Presentations", count: "5,328 evaluations", icon: FileCode, color: "bg-pink-500" },
+    { name: "Technical Reports", count: "4,156 evaluations", icon: FileBarChart2, color: "bg-emerald-500" },
+    { name: "Thesis/Dissertations", count: "3,842 evaluations", icon: FileKey, color: "bg-amber-500" },
+  ]
+
+  const metrics = [
+    { name: "Content Depth", value: "92%", improvement: "+7%", icon: FilePieChart },
+    { name: "Originality Score", value: "88%", improvement: "+12%", icon: FileHeart },
+    { name: "Structural Quality", value: "94%", improvement: "+5%", icon: FileClock },
+    { name: "Citation Accuracy", value: "89%", improvement: "+15%", icon: FileDigit },
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -inset-10 opacity-50">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
-        </div>
-      </div>
-
-      {/* Mouse Follower */}
-      <div
-        className="fixed w-6 h-6 bg-gradient-to-r from-violet-400 to-purple-400 rounded-full pointer-events-none z-50 mix-blend-difference transition-transform duration-150 ease-out"
-        style={{
-          left: mousePosition.x - 12,
-          top: mousePosition.y - 12,
-          transform: `scale(${isLoaded ? 1 : 0})`,
-        }}
-      />
-
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
       {/* Navigation */}
-      <nav className="relative z-40 border-b border-white/10 bg-black/20 backdrop-blur-xl">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
+      <nav className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-800/50 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
-              <div className="relative">
-                <div className="w-10 h-10 bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/25">
-                  <Video className="w-6 h-6 text-white" />
-                </div>
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
-                  <Sparkles className="w-2 h-2 text-white" />
-                </div>
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                <FileSearch className="w-5 h-5 text-white" />
               </div>
               <div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-white via-purple-200 to-violet-200 bg-clip-text text-transparent">
-                  NeuralVision
-                </span>
-                <div className="text-xs text-purple-300 font-medium">AI Competition Platform</div>
+                <span className="text-xl font-bold text-white">EvalPro</span>
+                <div className="text-xs text-blue-300">Academic Evaluation System</div>
               </div>
+            </div>
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#features" className="text-slate-300 hover:text-white transition-colors">Features</a>
+              <a href="#workflow" className="text-slate-300 hover:text-white transition-colors">Workflow</a>
+              <a href="#metrics" className="text-slate-300 hover:text-white transition-colors">Metrics</a>
+              <a href="#testimonials" className="text-slate-300 hover:text-white transition-colors">Testimonials</a>
             </div>
             <div className="flex items-center space-x-4">
               <Link href="/auth/login">
-                <Button
-                  variant="ghost"
-                  className="text-white hover:bg-white/10 border border-white/20 backdrop-blur-sm"
-                >
+                <Button variant="ghost" className="text-slate-300 hover:text-white hover:bg-slate-800/50">
                   Sign In
                 </Button>
               </Link>
               <Link href="/auth/register">
-                <Button className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white shadow-lg shadow-purple-500/25 border-0">
+                <Button className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
                   Get Started
-                  <Sparkles className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
             </div>
@@ -122,233 +170,426 @@ export default function HomePage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative z-30 py-32 px-6">
-        <div className="container mx-auto text-center">
-          <div
-            className={`transition-all duration-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          >
-            <Badge className="mb-8 bg-gradient-to-r from-violet-500/20 to-purple-500/20 text-violet-200 border-violet-500/30 hover:bg-violet-500/30 backdrop-blur-sm">
-              <Sparkles className="w-4 h-4 mr-2" />🚀 Next-Gen AI Evaluation Platform
-            </Badge>
-
-            <h1 className="text-7xl md:text-8xl font-black mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-white via-violet-200 to-purple-200 bg-clip-text text-transparent">
-                Redefine
+      <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-900/90 to-slate-950"></div>
+        <div className="max-w-7xl mx-auto relative">
+          <div className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Badge className="mb-6 bg-blue-500/20 text-blue-300 border-blue-500/30 hover:bg-blue-500/30 transition-all duration-300">
+                🚀 Now with enhanced AI evaluation models
+              </Badge>
+            </motion.div>
+            
+            <motion.h1 
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              Next-Generation <br />
+              <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                <Typewriter
+                  words={['Content Evaluation', 'Academic Assessment', 'Automated Grading', 'Plagiarism Detection']}
+                  loop={0}
+                  cursor
+                  cursorStyle="_"
+                  typeSpeed={70}
+                  deleteSpeed={50}
+                  delaySpeed={2000}
+                />
               </span>
-              <br />
-              <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Innovation
-              </span>
-            </h1>
-
-            <p className="text-xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Experience the future of competitive learning with our AI-powered evaluation system. Create groundbreaking
-              videos, compete globally, and shape tomorrow`&apos;`s technology landscape.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+            </motion.h1>
+            
+            <motion.p 
+              className="text-xl text-slate-300 mb-12 max-w-4xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              Transform how you evaluate academic work with our AI-powered platform that combines 
+              machine precision with human insight for comprehensive, bias-resistant assessments.
+            </motion.p>
+            
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-6 justify-center mb-20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
               <Link href="/auth/register">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 hover:from-violet-700 hover:via-purple-700 hover:to-pink-700 text-white text-lg px-12 py-6 rounded-2xl shadow-2xl shadow-purple-500/25 border-0 group"
-                >
-                  Launch Your Journey
-                  <Rocket className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                <Button size="lg" className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-8 py-4 text-lg shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-[1.02] group">
+                  Start Evaluating
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Link href="/leaderboard">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-lg px-12 py-6 rounded-2xl border-2 border-white/20 bg-white/5 backdrop-blur-sm text-white hover:bg-white/10 hover:border-white/30"
-                >
-                  Explore Leaderboard
-                  <Trophy className="ml-3 w-6 h-6" />
+              <Link href="#demo">
+                <Button size="lg" variant="outline" className="px-8 py-4 text-lg border-slate-700 bg-slate-900/50 text-white hover:bg-slate-800/50 hover:border-slate-600 transition-all duration-300 group">
+                  <PlayCircle className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
+                  Watch Demo
                 </Button>
               </Link>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
-              {stats.map((stat, index) => (
-                <Card
-                  key={index}
-                  className={`border-0 bg-white/5 backdrop-blur-xl shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 hover:-translate-y-2 group ${isLoaded ? "animate-fade-in-up" : ""}`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <CardContent className="p-8 text-center">
-                    <div
-                      className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-r ${stat.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <stat.icon className="w-8 h-8 text-white" />
-                    </div>
-                    <div className="text-4xl font-black text-white mb-2">{stat.value}</div>
-                    <div className="text-sm text-gray-300 font-medium">{stat.label}</div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            </motion.div>
           </div>
+
+          {/* Stats */}
+          <motion.div 
+            className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            {stats.map((stat, index) => (
+              <Card key={index} className="bg-slate-900/50 border-slate-800/50 backdrop-blur-sm hover:bg-slate-900/70 transition-all duration-300 hover:scale-[1.02] group">
+                <CardContent className="p-6 text-center">
+                  <div className={`w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-r ${stat.color} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}>
+                    <stat.icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
+                  <div className="text-sm text-slate-400 mb-1">{stat.label}</div>
+                  <div className="text-xs text-emerald-400 font-medium">{stat.change} this quarter</div>
+                </CardContent>
+              </Card>
+            ))}
+          </motion.div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="relative z-30 py-32 px-6">
-        <div className="container mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              Revolutionary Features
-            </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Powered by cutting-edge AI and designed for the next generation of innovators
+      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/30">
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">Advanced Evaluation Features</h2>
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+              Comprehensive tools for thorough, objective content assessment
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
+          </motion.div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <Card
+              <motion.div
                 key={index}
-                className={`border-0 bg-gradient-to-br ${feature.gradient} p-1 rounded-3xl shadow-2xl hover:shadow-purple-500/20 transition-all duration-700 hover:-translate-y-4 group`}
-                style={{ animationDelay: feature.delay }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
               >
-                <div className="bg-black/40 backdrop-blur-xl rounded-3xl p-8 h-full">
-                  <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <feature.icon className="w-10 h-10 text-white" />
-                  </div>
-                  <CardTitle className="text-2xl font-bold text-white mb-4 text-center">{feature.title}</CardTitle>
-                  <CardDescription className="text-gray-300 text-center leading-relaxed text-base">
-                    {feature.description}
-                  </CardDescription>
-                </div>
-              </Card>
+                <Card className="bg-slate-900/50 border-slate-800/50 backdrop-blur-sm hover:bg-slate-900/70 transition-all duration-300 hover:scale-[1.02] group h-full">
+                  <CardHeader className="text-center pb-4">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110`}>
+                      <feature.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <CardTitle className="text-xl text-white group-hover:text-blue-300 transition-colors">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-slate-300 text-center leading-relaxed">{feature.description}</CardDescription>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Timeline Section */}
-      <section className="relative z-30 py-32 px-6">
-        <div className="container mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              Competition Journey
-            </h2>
-            <p className="text-xl text-gray-400">Your path to innovation excellence</p>
-          </div>
-
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-4 gap-8">
-              {timeline.map((phase, index) => (
-                <Card
+      {/* Workflow Section */}
+      <section id="workflow" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">Evaluation Workflow</h2>
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+              Our streamlined process ensures accurate, consistent results
+            </p>
+          </motion.div>
+          
+          <div className="relative">
+            <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500/20 via-indigo-500/20 to-purple-500/20"></div>
+            
+            <div className="space-y-12 lg:space-y-0 lg:grid lg:grid-cols-5 lg:gap-8">
+              {workflow.map((step, index) => (
+                <motion.div
                   key={index}
-                  className={`border-2 ${
-                    phase.status === "active"
-                      ? "border-violet-500 bg-gradient-to-br from-violet-500/20 to-purple-500/20 shadow-2xl shadow-violet-500/25"
-                      : "border-white/20 bg-white/5"
-                  } backdrop-blur-xl rounded-3xl transition-all duration-500 hover:-translate-y-2 group`}
+                  className="relative"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
                 >
-                  <CardHeader className="text-center pb-4">
-                    <div
-                      className={`w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:scale-110 ${
-                        phase.status === "active"
-                          ? "bg-gradient-to-r from-violet-500 to-purple-600 shadow-lg shadow-violet-500/50"
-                          : "bg-white/10"
-                      }`}
-                    >
-                      <phase.icon className="w-10 h-10 text-white" />
-                    </div>
-                    <CardTitle className="text-xl font-bold text-white mb-2">{phase.phase}</CardTitle>
-                    <CardDescription className="font-semibold text-gray-300">{phase.date}</CardDescription>
-                    {phase.status === "active" && (
-                      <Badge className="mt-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0">
-                        <div className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
-                        Active Now
-                      </Badge>
-                    )}
-                  </CardHeader>
-                </Card>
+                  <div className="lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 -mt-2 w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 z-10 hidden lg:block"></div>
+                  
+                  <Card className={`border-2 bg-slate-900/50 backdrop-blur-sm hover:bg-slate-900/70 transition-all duration-300 hover:scale-[1.02] ${
+                    index % 2 === 0 ? "lg:mt-0" : "lg:mt-16"
+                  }`}>
+                    <CardHeader className="pb-4">
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-4 ${step.color} shadow-lg`}>
+                        <step.icon className="w-5 h-5 text-white" />
+                      </div>
+                      <CardTitle className="text-lg text-white">{step.step}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-slate-300">{step.description}</CardDescription>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative z-30 py-32 px-6">
-        <div className="container mx-auto text-center">
-          <div className="max-w-4xl mx-auto bg-gradient-to-r from-violet-600/20 via-purple-600/20 to-pink-600/20 backdrop-blur-xl rounded-3xl p-12 border border-white/20 shadow-2xl">
-            <h2 className="text-5xl font-black mb-8 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
-              Ready to Make History?
-            </h2>
-            <p className="text-xl text-gray-300 mb-10 leading-relaxed">
-              Join thousands of innovators pushing the boundaries of what`&apos;`s possible. Your breakthrough moment starts
-              here.
+      {/* Metrics Section */}
+      <section id="metrics" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/30">
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">Evaluation Metrics</h2>
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+              Comprehensive scoring across key academic dimensions
             </p>
-            <Link href="/auth/register">
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 hover:from-violet-700 hover:via-purple-700 hover:to-pink-700 text-white text-xl px-16 py-8 rounded-2xl shadow-2xl shadow-purple-500/25 border-0 group"
+          </motion.div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {metrics.map((metric, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
               >
-                Begin Your Legacy
-                <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform" />
-              </Button>
-            </Link>
+                <Card className="bg-slate-900/50 border-slate-800/50 backdrop-blur-sm hover:bg-slate-900/70 transition-all duration-300 hover:scale-[1.02]">
+                  <CardContent className="p-6">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500/20 to-indigo-500/20 flex items-center justify-center">
+                        <metric.icon className="w-5 h-5 text-blue-400" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-white">{metric.name}</h3>
+                        <div className="flex items-baseline space-x-2">
+                          <span className="text-2xl font-bold text-white">{metric.value}</span>
+                          <span className="text-sm text-emerald-400">↑ {metric.improvement}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative z-30 border-t border-white/10 bg-black/20 backdrop-blur-xl py-16 px-6">
-        <div className="container mx-auto text-center">
-          <div className="flex items-center justify-center space-x-3 mb-8">
-            <div className="w-12 h-12 bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
-              <Video className="w-7 h-7 text-white" />
-            </div>
-            <span className="text-3xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              NeuralVision
-            </span>
+      {/* Evaluation Types Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">Supported Content Types</h2>
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+              Specialized evaluation models for different academic formats
+            </p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {evaluationTypes.map((type, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="bg-slate-900/50 border-slate-800/50 backdrop-blur-sm hover:bg-slate-900/70 transition-all duration-300 hover:scale-[1.02] group cursor-pointer">
+                  <CardContent className="p-6">
+                    <div className="flex items-center space-x-4">
+                      <div className={`w-12 h-12 rounded-xl ${type.color} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}>
+                        <type.icon className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-white group-hover:text-blue-300 transition-colors">{type.name}</h3>
+                        <p className="text-sm text-slate-400">{type.count}</p>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
-          <p className="text-gray-400 mb-6 text-lg">Empowering the next generation of AI innovators</p>
-          <div className="flex items-center justify-center space-x-8 text-sm text-gray-500">
-            <span>© 2024 NeuralVision</span>
-            <span>•</span>
-            <span>Crafted with 💜 for innovators</span>
-            <span>•</span>
-            <span>Powered by AI</span>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/30">
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">Trusted by Academics</h2>
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+              What educators and researchers say about our platform
+            </p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="bg-slate-900/50 border-slate-800/50 backdrop-blur-sm hover:bg-slate-900/70 transition-all duration-300 hover:scale-[1.02] group h-full">
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center space-x-4">
+                      <Avatar className="w-12 h-12 border-2 border-blue-500/30">
+                        <AvatarFallback className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold">
+                          {testimonial.avatar}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-white">{testimonial.name}</h4>
+                        <p className="text-sm text-slate-400">{testimonial.role}</p>
+                        <p className="text-xs text-blue-400">{testimonial.university}</p>
+                      </div>
+                      <div className="flex space-x-1">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                        ))}
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-slate-300 italic leading-relaxed">{testimonial.content}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          className="max-w-4xl mx-auto text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <div className="bg-gradient-to-br from-blue-900/30 via-slate-900/70 to-indigo-900/30 backdrop-blur-xl rounded-3xl p-12 border border-slate-800/50">
+            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-8">Ready to Transform Evaluation?</h2>
+            <p className="text-xl text-slate-300 mb-10 leading-relaxed">
+              Join hundreds of institutions using our platform to deliver faster, fairer, 
+              and more insightful academic evaluations.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href="/auth/register">
+                <Button size="lg" className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-12 py-4 text-lg shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-[1.02] group">
+                  Get Started
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link href="/demo">
+                <Button size="lg" variant="outline" className="px-12 py-4 text-lg border-slate-700 bg-slate-900/50 text-white hover:bg-slate-800/50 hover:border-slate-600 transition-all duration-300">
+                  <LayoutDashboard className="mr-2 w-5 h-5" />
+                  View Dashboard
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-slate-950/80 border-t border-slate-800/50 py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8 mb-12">
+            <div className="md:col-span-2">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <FileSearch className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <span className="text-xl font-bold text-white">EvalPro</span>
+                  <div className="text-xs text-blue-300">Academic Evaluation System</div>
+                </div>
+              </div>
+              <p className="text-slate-300 mb-6 leading-relaxed">
+                The most advanced AI-powered evaluation platform for academic institutions and researchers.
+              </p>
+              <div className="flex space-x-4">
+                <Button size="sm" variant="outline" className="border-slate-700 bg-slate-900/50 text-slate-300 hover:bg-slate-800/50">
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  Support
+                </Button>
+                <Button size="sm" variant="outline" className="border-slate-700 bg-slate-900/50 text-slate-300 hover:bg-slate-800/50">
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  Documentation
+                </Button>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-4">Platform</h4>
+              <div className="space-y-2">
+                <a href="#" className="block text-slate-400 hover:text-white transition-colors">Features</a>
+                <a href="#" className="block text-slate-400 hover:text-white transition-colors">Pricing</a>
+                <a href="#" className="block text-slate-400 hover:text-white transition-colors">API</a>
+                <a href="#" className="block text-slate-400 hover:text-white transition-colors">Integrations</a>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-4">Resources</h4>
+              <div className="space-y-2">
+                <a href="#" className="block text-slate-400 hover:text-white transition-colors">Blog</a>
+                <a href="#" className="block text-slate-400 hover:text-white transition-colors">Case Studies</a>
+                <a href="#" className="block text-slate-400 hover:text-white transition-colors">Research</a>
+                <a href="#" className="block text-slate-400 hover:text-white transition-colors">Contact</a>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-slate-800/50 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <div className="text-slate-400 text-sm mb-4 md:mb-0">
+              © 2024 EvalPro. All rights reserved. Designed for academic excellence.
+            </div>
+            <div className="flex items-center space-x-6 text-sm text-slate-400">
+              <a href="#" className="hover:text-white transition-colors">Privacy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms</a>
+              <a href="#" className="hover:text-white transition-colors">Security</a>
+              <a href="#" className="hover:text-white transition-colors">Accessibility</a>
+            </div>
           </div>
         </div>
       </footer>
-
-      <style jsx>{`
-        @keyframes blob {
-          0% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-          100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in-up {
-          animation: fade-in-up 0.6s ease-out forwards;
-        }
-      `}</style>
     </div>
   )
 }

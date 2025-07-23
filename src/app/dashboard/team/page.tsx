@@ -9,13 +9,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   Upload,
-  Video,
+  FileText,
   Users,
   MessageSquare,
   Trophy,
-  Clock,
   Star,
   Edit3,
   Save,
@@ -23,6 +23,12 @@ import {
   BarChart3,
   Bell,
   Settings,
+  CheckCircle,
+  Target,
+  Bot,
+  Award,
+  FileSearch,
+  Activity,
 } from "lucide-react"
 
 export default function TeamDashboard() {
@@ -31,47 +37,104 @@ export default function TeamDashboard() {
 
   // Mock data
   const teamData = {
-    name: "Code Innovators",
-    leadName: "John Smith",
+    name: "AI Research Collective",
+    leadName: "Dr. Alex Chen",
     members: [
-      { name: "John Smith", role: "Team Lead", email: "john@university.edu" },
-      { name: "Jane Doe", role: "Developer", email: "jane@university.edu" },
-      { name: "Mike Johnson", role: "Designer", email: "mike@university.edu" },
+      { name: "Dr. Alex Chen", role: "Team Lead", email: "alex@university.edu", avatar: "AC" },
+      { name: "Sarah Kim", role: "ML Researcher", email: "sarah@university.edu", avatar: "SK" },
+      { name: "Marcus Johnson", role: "Data Scientist", email: "marcus@university.edu", avatar: "MJ" },
+      { name: "Emily Rodriguez", role: "AI Ethics Specialist", email: "emily@university.edu", avatar: "ER" },
     ],
-    currentScore: 85.5,
-    rank: 3,
-    totalTeams: 150,
-    submissionStatus: "submitted",
+    currentScore: 94.2,
+    rank: 1,
+    totalSubmissions: 1247,
+    submissionStatus: "evaluated",
   }
 
   const evaluationData = [
-    { criteria: "Innovation & Creativity", score: 13, maxScore: 15, feedback: "Excellent creative approach!" },
-    { criteria: "Clarity & Accessibility", score: 8, maxScore: 10, feedback: "Very clear presentation" },
-    { criteria: "Interactivity & Engagement", score: 22, maxScore: 25, feedback: "Highly engaging content" },
-    { criteria: "Video Quality", score: 9, maxScore: 10, feedback: "Professional quality video" },
+    {
+      criteria: "Content Quality",
+      score: 92,
+      maxScore: 100,
+      feedback: "Exceptional depth and accuracy",
+      color: "from-violet-500 to-purple-600",
+    },
+    {
+      criteria: "Originality",
+      score: 96,
+      maxScore: 100,
+      feedback: "Highly innovative approach",
+      color: "from-cyan-500 to-blue-600",
+    },
+    {
+      criteria: "Methodology",
+      score: 94,
+      maxScore: 100,
+      feedback: "Rigorous research methods",
+      color: "from-pink-500 to-rose-600",
+    },
+    {
+      criteria: "Clarity & Writing",
+      score: 95,
+      maxScore: 100,
+      feedback: "Excellent presentation",
+      color: "from-emerald-500 to-teal-600",
+    },
+  ]
+
+  const recentActivity = [
+    {
+      type: "evaluation",
+      message: "Perfect evaluation received",
+      detail: "AI Ethics Framework scored 96/100",
+      time: "2 hours ago",
+      color: "from-emerald-500 to-teal-600",
+    },
+    {
+      type: "feedback",
+      message: "Detailed feedback available",
+      detail: "Expert comments on methodology",
+      time: "5 hours ago",
+      color: "from-blue-500 to-cyan-600",
+    },
+    {
+      type: "rank",
+      message: "Achieved #1 ranking",
+      detail: "Top performer in AI category",
+      time: "1 day ago",
+      color: "from-purple-500 to-pink-600",
+    },
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-cyan-50 to-blue-100">
       {/* Header */}
-      <header className="bg-white border-b sticky top-0 z-40">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+      <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200/50 sticky top-0 z-40 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <Video className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
+                <FileText className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">{teamData.name}</h1>
-                <p className="text-sm text-gray-600">Team Dashboard</p>
+                <h1 className="text-xl font-bold text-gray-800">{teamData.name}</h1>
+                <p className="text-sm text-gray-600">Submission Dashboard</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                className="bg-white/50 border-gray-200 text-gray-600 hover:bg-white hover:text-gray-700 transition-all duration-300"
+              >
                 <Bell className="w-4 h-4 mr-2" />
                 Notifications
               </Button>
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                className="bg-white/50 border-gray-200 text-gray-600 hover:bg-white hover:text-gray-700 transition-all duration-300"
+              >
                 <Settings className="w-4 h-4 mr-2" />
                 Settings
               </Button>
@@ -80,67 +143,100 @@ export default function TeamDashboard() {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Sidebar Stats */}
           <div className="lg:col-span-1 space-y-6">
             {/* Score Card */}
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-600 to-purple-600 text-white">
+            <Card className="bg-gradient-to-br from-blue-100 to-cyan-100 border-blue-200 hover:from-blue-200 hover:to-cyan-200 transition-all duration-300">
               <CardHeader className="pb-3">
-                <CardTitle className="flex items-center justify-between">
+                <CardTitle className="flex items-center justify-between text-gray-800">
                   <span>Current Score</span>
-                  <Trophy className="w-5 h-5" />
+                  <div className="w-10 h-10 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <Trophy className="w-5 h-5 text-white" />
+                  </div>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold mb-2">{teamData.currentScore}/100</div>
-                <div className="text-blue-100 text-sm">
-                  Rank #{teamData.rank} of {teamData.totalTeams}
+                <div className="text-4xl font-black text-gray-800 mb-2">{teamData.currentScore}/100</div>
+                <div className="text-blue-700 text-sm mb-3">
+                  Rank #{teamData.rank} of {teamData.totalSubmissions.toLocaleString()}
                 </div>
-                <Progress value={teamData.currentScore} className="mt-3 bg-blue-500" />
+                <Progress value={teamData.currentScore} className="h-3 bg-blue-200" />
+                <Badge className="mt-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-0 hover:from-emerald-600 hover:to-teal-600 transition-all duration-300">
+                  <Target className="w-3 h-3 mr-1" />
+                  Top Performer
+                </Badge>
               </CardContent>
             </Card>
 
             {/* Team Info */}
-            <Card className="shadow-lg">
+            <Card className="bg-white/80 backdrop-blur-sm border-gray-200/50 hover:bg-white hover:shadow-lg transition-all duration-300">
               <CardHeader>
-                <CardTitle className="flex items-center">
+                <CardTitle className="flex items-center text-gray-800">
                   <Users className="w-5 h-5 mr-2" />
                   Team Members
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-4">
                 {teamData.members.map((member, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                      {member.name.charAt(0)}
-                    </div>
+                  <div
+                    key={index}
+                    className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all duration-300"
+                  >
+                    <Avatar className="w-10 h-10 border-2 border-blue-200">
+                      <AvatarFallback className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-bold text-sm">
+                        {member.avatar}
+                      </AvatarFallback>
+                    </Avatar>
                     <div className="flex-1">
-                      <div className="font-medium text-sm">{member.name}</div>
-                      <div className="text-xs text-gray-500">{member.role}</div>
+                      <div className="font-semibold text-gray-800 text-sm">{member.name}</div>
+                      <div className="text-xs text-gray-600">{member.role}</div>
                     </div>
                   </div>
                 ))}
               </CardContent>
             </Card>
 
-            {/* Quick Actions */}
-            <Card className="shadow-lg">
+            {/* AI Assistant */}
+            <Card className="bg-gradient-to-br from-purple-50 to-pink-100 border-purple-200 hover:from-purple-100 hover:to-pink-200 transition-all duration-300">
               <CardHeader>
-                <CardTitle className="text-lg">Quick Actions</CardTitle>
+                <CardTitle className="flex items-center text-lg text-gray-800">
+                  <Bot className="w-5 h-5 mr-2 text-purple-600" />
+                  AI Assistant
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button className="w-full justify-start bg-transparent" variant="outline">
-                  <MessageSquare className="w-4 h-4 mr-2" />
+                <div className="flex items-center space-x-3 p-3 bg-purple-100 rounded-lg border border-purple-200">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-800">Optimization Suggestions</p>
+                    <p className="text-xs text-gray-600">3 recommendations available</p>
+                  </div>
+                </div>
+                <Button className="w-full bg-purple-100 border border-purple-200 text-purple-700 hover:bg-purple-200 transition-all duration-300">
+                  View Suggestions
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Quick Actions */}
+            <Card className="bg-white/80 backdrop-blur-sm border-gray-200/50 hover:bg-white hover:shadow-lg transition-all duration-300">
+              <CardHeader>
+                <CardTitle className="text-lg text-gray-800">Quick Actions</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Button className="w-full justify-start bg-gradient-to-r from-violet-100 to-purple-100 border border-violet-200 text-gray-700 hover:from-violet-200 hover:to-purple-200 transition-all duration-300 group">
+                  <MessageSquare className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
                   Contact Support
                 </Button>
-                <Button className="w-full justify-start bg-transparent" variant="outline">
-                  <BarChart3 className="w-4 h-4 mr-2" />
+                <Button className="w-full justify-start bg-gradient-to-r from-cyan-100 to-blue-100 border border-cyan-200 text-gray-700 hover:from-cyan-200 hover:to-blue-200 transition-all duration-300 group">
+                  <BarChart3 className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
                   View Analytics
                 </Button>
-                <Button className="w-full justify-start bg-transparent" variant="outline">
-                  <Eye className="w-4 h-4 mr-2" />
-                  Preview Submission
+                <Button className="w-full justify-start bg-gradient-to-r from-pink-100 to-rose-100 border border-pink-200 text-gray-700 hover:from-pink-200 hover:to-rose-200 transition-all duration-300 group">
+                  <Eye className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                  Preview Mode
                 </Button>
               </CardContent>
             </Card>
@@ -149,28 +245,28 @@ export default function TeamDashboard() {
           {/* Main Content */}
           <div className="lg:col-span-3">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-              <TabsList className="grid w-full grid-cols-4 bg-white border shadow-sm">
+              <TabsList className="grid w-full grid-cols-4 bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-xl p-1 shadow-sm">
                 <TabsTrigger
                   value="overview"
-                  className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-600 data-[state=active]:text-white text-gray-600 rounded-lg transition-all duration-300"
                 >
                   Overview
                 </TabsTrigger>
                 <TabsTrigger
                   value="submission"
-                  className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-600 data-[state=active]:text-white text-gray-600 rounded-lg transition-all duration-300"
                 >
                   Submission
                 </TabsTrigger>
                 <TabsTrigger
                   value="evaluation"
-                  className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-600 data-[state=active]:text-white text-gray-600 rounded-lg transition-all duration-300"
                 >
                   Evaluation
                 </TabsTrigger>
                 <TabsTrigger
                   value="feedback"
-                  className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-600 data-[state=active]:text-white text-gray-600 rounded-lg transition-all duration-300"
                 >
                   Feedback
                 </TabsTrigger>
@@ -179,74 +275,83 @@ export default function TeamDashboard() {
               {/* Overview Tab */}
               <TabsContent value="overview" className="space-y-6">
                 <div className="grid md:grid-cols-3 gap-6">
-                  <Card className="shadow-lg">
+                  <Card className="bg-gradient-to-br from-emerald-50 to-teal-100 border-emerald-200 hover:from-emerald-100 hover:to-teal-200 transition-all duration-300 group">
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-lg flex items-center">
-                        <Clock className="w-5 h-5 mr-2 text-orange-500" />
-                        Submission Status
+                      <CardTitle className="text-lg flex items-center text-gray-800">
+                        <div className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center mr-3 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                          <CheckCircle className="w-5 h-5 text-white" />
+                        </div>
+                        Status
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <Badge className="bg-green-100 text-green-700 hover:bg-green-200">✓ Submitted</Badge>
-                      <p className="text-sm text-gray-600 mt-2">Submitted on March 25, 2024</p>
+                      <Badge className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-0 mb-2">
+                        ✓ Evaluated
+                      </Badge>
+                      <p className="text-sm text-emerald-700">Submitted on March 25, 2024</p>
                     </CardContent>
                   </Card>
 
-                  <Card className="shadow-lg">
+                  <Card className="bg-gradient-to-br from-amber-50 to-orange-100 border-amber-200 hover:from-amber-100 hover:to-orange-200 transition-all duration-300 group">
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-lg flex items-center">
-                        <Star className="w-5 h-5 mr-2 text-yellow-500" />
+                      <CardTitle className="text-lg flex items-center text-gray-800">
+                        <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl flex items-center justify-center mr-3 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                          <Star className="w-5 h-5 text-white" />
+                        </div>
                         Evaluations
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-2xl font-bold">2/3</div>
-                      <p className="text-sm text-gray-600">Evaluations completed</p>
+                      <div className="text-3xl font-bold text-gray-800">3/3</div>
+                      <p className="text-sm text-orange-700">All evaluations completed</p>
                     </CardContent>
                   </Card>
 
-                  <Card className="shadow-lg">
+                  <Card className="bg-gradient-to-br from-purple-50 to-pink-100 border-purple-200 hover:from-purple-100 hover:to-pink-200 transition-all duration-300 group">
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-lg flex items-center">
-                        <Trophy className="w-5 h-5 mr-2 text-purple-500" />
-                        Current Rank
+                      <CardTitle className="text-lg flex items-center text-gray-800">
+                        <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mr-3 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                          <Trophy className="w-5 h-5 text-white" />
+                        </div>
+                        Rank
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-2xl font-bold">#{teamData.rank}</div>
-                      <p className="text-sm text-gray-600">Out of {teamData.totalTeams} teams</p>
+                      <div className="text-3xl font-bold text-gray-800">#{teamData.rank}</div>
+                      <p className="text-sm text-purple-700">Global ranking</p>
                     </CardContent>
                   </Card>
                 </div>
 
                 {/* Recent Activity */}
-                <Card className="shadow-lg">
+                <Card className="bg-white/80 backdrop-blur-sm border-gray-200/50 hover:bg-white hover:shadow-lg transition-all duration-300">
                   <CardHeader>
-                    <CardTitle>Recent Activity</CardTitle>
+                    <CardTitle className="text-gray-800 flex items-center">
+                      <Activity className="w-5 h-5 mr-2 text-blue-600" />
+                      Recent Activity
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                        <div>
-                          <p className="font-medium">Evaluation completed by Dr. Sarah Wilson</p>
-                          <p className="text-sm text-gray-600">2 hours ago</p>
+                      {recentActivity.map((activity, index) => (
+                        <div
+                          key={index}
+                          className={`p-4 rounded-xl bg-gradient-to-r ${activity.color}/10 border border-gray-200 hover:${activity.color}/20 transition-all duration-300 group`}
+                        >
+                          <div className="flex items-start space-x-4">
+                            <div
+                              className={`w-3 h-3 bg-gradient-to-r ${activity.color} rounded-full mt-2 group-hover:scale-110 transition-transform`}
+                            ></div>
+                            <div className="flex-1">
+                              <p className="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
+                                {activity.message}
+                              </p>
+                              <p className="text-sm text-gray-600 mt-1">{activity.detail}</p>
+                              <p className="text-xs text-gray-500 mt-2">{activity.time}</p>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                        <div>
-                          <p className="font-medium">Video submission updated</p>
-                          <p className="text-sm text-gray-600">1 day ago</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
-                        <div>
-                          <p className="font-medium">Team registered successfully</p>
-                          <p className="text-sm text-gray-600">5 days ago</p>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </CardContent>
                 </Card>
@@ -254,14 +359,24 @@ export default function TeamDashboard() {
 
               {/* Submission Tab */}
               <TabsContent value="submission" className="space-y-6">
-                <Card className="shadow-lg">
+                <Card className="bg-white/80 backdrop-blur-sm border-gray-200/50 hover:bg-white hover:shadow-lg transition-all duration-300">
                   <CardHeader className="flex flex-row items-center justify-between">
                     <div>
-                      <CardTitle>Video Submission</CardTitle>
-                      <CardDescription>Upload and manage your competition video</CardDescription>
+                      <CardTitle className="text-gray-800">Academic Submission</CardTitle>
+                      <CardDescription className="text-gray-600">
+                        Upload and manage your academic work for evaluation
+                      </CardDescription>
                     </div>
-                    <Button variant="outline" onClick={() => setIsEditing(!isEditing)}>
-                      {isEditing ? <Save className="w-4 h-4 mr-2" /> : <Edit3 className="w-4 h-4 mr-2" />}
+                    <Button
+                      variant="outline"
+                      onClick={() => setIsEditing(!isEditing)}
+                      className="bg-white/50 border-gray-200 text-gray-600 hover:bg-white hover:text-gray-700 transition-all duration-300 group"
+                    >
+                      {isEditing ? (
+                        <Save className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                      ) : (
+                        <Edit3 className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                      )}
                       {isEditing ? "Save" : "Edit"}
                     </Button>
                   </CardHeader>
@@ -269,55 +384,106 @@ export default function TeamDashboard() {
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-4">
                         <div>
-                          <Label htmlFor="title">Video Title</Label>
-                          <Input id="title" defaultValue="AI-Powered Learning Assistant" disabled={!isEditing} />
-                        </div>
-                        <div>
-                          <Label htmlFor="topic">Topic</Label>
-                          <Input id="topic" defaultValue="Artificial Intelligence in Education" disabled={!isEditing} />
-                        </div>
-                        <div>
-                          <Label htmlFor="video-url">Video URL</Label>
+                          <Label htmlFor="title" className="text-gray-700">
+                            Paper Title
+                          </Label>
                           <Input
-                            id="video-url"
-                            defaultValue="https://drive.google.com/file/d/1234567890"
+                            id="title"
+                            defaultValue="AI Ethics Framework for Healthcare Applications"
                             disabled={!isEditing}
+                            className="mt-1 bg-gray-50/50 border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-300"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="category" className="text-gray-700">
+                            Category
+                          </Label>
+                          <Input
+                            id="category"
+                            defaultValue="Artificial Intelligence & Ethics"
+                            disabled={!isEditing}
+                            className="mt-1 bg-gray-50/50 border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-300"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="keywords" className="text-gray-700">
+                            Keywords
+                          </Label>
+                          <Input
+                            id="keywords"
+                            defaultValue="AI Ethics, Healthcare, Machine Learning, Bias"
+                            disabled={!isEditing}
+                            className="mt-1 bg-gray-50/50 border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-300"
                           />
                         </div>
                       </div>
                       <div className="space-y-4">
                         <div>
-                          <Label htmlFor="description">Description</Label>
+                          <Label htmlFor="abstract" className="text-gray-700">
+                            Abstract
+                          </Label>
                           <Textarea
-                            id="description"
+                            id="abstract"
                             rows={4}
-                            defaultValue="An innovative approach to personalized learning using AI technology..."
+                            defaultValue="This paper presents a comprehensive framework for implementing ethical AI systems in healthcare applications, addressing bias mitigation, transparency, and accountability..."
                             disabled={!isEditing}
+                            className="mt-1 bg-gray-50/50 border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-300"
                           />
                         </div>
                         <div>
-                          <Label htmlFor="learning-outcomes">Learning Outcomes</Label>
+                          <Label htmlFor="authors" className="text-gray-700">
+                            Authors
+                          </Label>
                           <Textarea
-                            id="learning-outcomes"
+                            id="authors"
                             rows={3}
-                            defaultValue="• Understanding AI fundamentals
-• Implementing machine learning algorithms
-• Designing user-friendly interfaces"
+                            defaultValue="Dr. Alex Chen, Sarah Kim, Marcus Johnson, Emily Rodriguez"
                             disabled={!isEditing}
+                            className="mt-1 bg-gray-50/50 border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-300"
                           />
                         </div>
                       </div>
                     </div>
 
-                    {/* Video Preview */}
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                      <Video className="w-12 h-12 mx-auto text-gray-400 mb-4" />
-                      <h3 className="text-lg font-medium mb-2">Video Preview</h3>
-                      <p className="text-gray-600 mb-4">Your submitted video will appear here</p>
-                      <Button variant="outline">
-                        <Upload className="w-4 h-4 mr-2" />
-                        Update Video
-                      </Button>
+                    {/* File Upload */}
+                    <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center bg-gray-50 hover:bg-gray-100 hover:border-gray-400 transition-all duration-300 group">
+                      <FileSearch className="w-16 h-16 mx-auto text-gray-400 mb-4 group-hover:text-blue-500 group-hover:scale-110 transition-all duration-300" />
+                      <h3 className="text-lg font-medium mb-2 text-gray-800">Document Upload</h3>
+                      <p className="text-gray-600 mb-4">Upload your research paper, thesis, or academic document</p>
+                      <div className="flex items-center justify-center space-x-4">
+                        <Button
+                          variant="outline"
+                          className="bg-white/50 border-gray-200 text-gray-600 hover:bg-white hover:text-gray-700 transition-all duration-300 group"
+                        >
+                          <Upload className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                          Upload Document
+                        </Button>
+                        <div className="text-sm text-gray-500">PDF, DOC, DOCX up to 50MB</div>
+                      </div>
+                    </div>
+
+                    {/* Current Submission */}
+                    <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl p-6">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg">
+                          <FileText className="w-6 h-6 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-gray-800">AI_Ethics_Framework_Healthcare.pdf</h4>
+                          <p className="text-sm text-gray-600">32 pages • Submitted March 25, 2024</p>
+                          <div className="flex items-center space-x-4 mt-2">
+                            <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">Evaluated</Badge>
+                            <span className="text-sm text-gray-600">Score: 94.2/100</span>
+                          </div>
+                        </div>
+                        <Button
+                          variant="outline"
+                          className="bg-white/50 border-gray-200 text-gray-600 hover:bg-white hover:text-gray-700 transition-all duration-300"
+                        >
+                          <Eye className="w-4 h-4 mr-2" />
+                          View
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -325,22 +491,29 @@ export default function TeamDashboard() {
 
               {/* Evaluation Tab */}
               <TabsContent value="evaluation" className="space-y-6">
-                <Card className="shadow-lg">
+                <Card className="bg-white/80 backdrop-blur-sm border-gray-200/50 hover:bg-white hover:shadow-lg transition-all duration-300">
                   <CardHeader>
-                    <CardTitle>Evaluation Progress</CardTitle>
-                    <CardDescription>Track your evaluation scores across all criteria</CardDescription>
+                    <CardTitle className="text-gray-800">Evaluation Results</CardTitle>
+                    <CardDescription className="text-gray-600">
+                      Detailed breakdown of your submission evaluation
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-6">
                       {evaluationData.map((item, index) => (
-                        <div key={index} className="space-y-2">
+                        <div
+                          key={index}
+                          className="space-y-3 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300 group"
+                        >
                           <div className="flex justify-between items-center">
-                            <span className="font-medium">{item.criteria}</span>
-                            <span className="text-sm font-bold">
+                            <span className="font-medium text-gray-800 group-hover:text-blue-600 transition-colors">
+                              {item.criteria}
+                            </span>
+                            <span className="text-sm font-bold text-gray-800">
                               {item.score}/{item.maxScore}
                             </span>
                           </div>
-                          <Progress value={(item.score / item.maxScore) * 100} className="h-2" />
+                          <Progress value={(item.score / item.maxScore) * 100} className="h-3 bg-gray-200" />
                           <p className="text-sm text-gray-600">{item.feedback}</p>
                         </div>
                       ))}
@@ -348,33 +521,78 @@ export default function TeamDashboard() {
                   </CardContent>
                 </Card>
 
-                {/* Evaluator Status */}
-                <Card className="shadow-lg">
+                {/* AI Analysis */}
+                <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200 hover:from-purple-100 hover:to-pink-100 transition-all duration-300">
                   <CardHeader>
-                    <CardTitle>Evaluator Status</CardTitle>
+                    <CardTitle className="flex items-center text-gray-800">
+                      <Bot className="w-5 h-5 mr-2 text-purple-600" />
+                      AI Analysis Summary
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between p-3 bg-purple-100 rounded-lg border border-purple-200">
+                          <span className="text-gray-700">Originality Score</span>
+                          <span className="font-bold text-purple-700">96%</span>
+                        </div>
+                        <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-200">
+                          <span className="text-gray-700">Plagiarism Check</span>
+                          <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">Clean</Badge>
+                        </div>
+                        <div className="flex items-center justify-between p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+                          <span className="text-gray-700">Structure Quality</span>
+                          <span className="font-bold text-emerald-700">Excellent</span>
+                        </div>
+                      </div>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between p-3 bg-amber-50 rounded-lg border border-amber-200">
+                          <span className="text-gray-700">Citation Accuracy</span>
+                          <span className="font-bold text-amber-700">98%</span>
+                        </div>
+                        <div className="flex items-center justify-between p-3 bg-cyan-50 rounded-lg border border-cyan-200">
+                          <span className="text-gray-700">Readability</span>
+                          <span className="font-bold text-cyan-700">High</span>
+                        </div>
+                        <div className="flex items-center justify-between p-3 bg-pink-50 rounded-lg border border-pink-200">
+                          <span className="text-gray-700">Technical Depth</span>
+                          <span className="font-bold text-pink-700">Advanced</span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Evaluator Status */}
+                <Card className="bg-white/80 backdrop-blur-sm border-gray-200/50 hover:bg-white hover:shadow-lg transition-all duration-300">
+                  <CardHeader>
+                    <CardTitle className="text-gray-800">Expert Evaluators</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid md:grid-cols-3 gap-4">
-                      <div className="text-center p-4 border rounded-lg">
-                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                          <Star className="w-6 h-6 text-green-600" />
+                      <div className="text-center p-4 bg-emerald-50 border border-emerald-200 rounded-xl hover:bg-emerald-100 transition-all duration-300 group">
+                        <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
+                          <CheckCircle className="w-6 h-6 text-white" />
                         </div>
-                        <h4 className="font-medium">Dr. Sarah Wilson</h4>
-                        <Badge className="bg-green-100 text-green-700 mt-1">Completed</Badge>
+                        <h4 className="font-medium text-gray-800">Dr. Sarah Wilson</h4>
+                        <p className="text-xs text-gray-600 mb-2">AI Ethics Expert</p>
+                        <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">Completed</Badge>
                       </div>
-                      <div className="text-center p-4 border rounded-lg">
-                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                          <Star className="w-6 h-6 text-green-600" />
+                      <div className="text-center p-4 bg-emerald-50 border border-emerald-200 rounded-xl hover:bg-emerald-100 transition-all duration-300 group">
+                        <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
+                          <CheckCircle className="w-6 h-6 text-white" />
                         </div>
-                        <h4 className="font-medium">Prof. Michael Chen</h4>
-                        <Badge className="bg-green-100 text-green-700 mt-1">Completed</Badge>
+                        <h4 className="font-medium text-gray-800">Prof. Michael Chen</h4>
+                        <p className="text-xs text-gray-600 mb-2">Healthcare AI</p>
+                        <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">Completed</Badge>
                       </div>
-                      <div className="text-center p-4 border rounded-lg">
-                        <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                          <Clock className="w-6 h-6 text-yellow-600" />
+                      <div className="text-center p-4 bg-emerald-50 border border-emerald-200 rounded-xl hover:bg-emerald-100 transition-all duration-300 group">
+                        <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
+                          <CheckCircle className="w-6 h-6 text-white" />
                         </div>
-                        <h4 className="font-medium">Dr. Emily Rodriguez</h4>
-                        <Badge className="bg-yellow-100 text-yellow-700 mt-1">In Progress</Badge>
+                        <h4 className="font-medium text-gray-800">Dr. Emily Rodriguez</h4>
+                        <p className="text-xs text-gray-600 mb-2">ML Researcher</p>
+                        <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">Completed</Badge>
                       </div>
                     </div>
                   </CardContent>
@@ -383,65 +601,114 @@ export default function TeamDashboard() {
 
               {/* Feedback Tab */}
               <TabsContent value="feedback" className="space-y-6">
-                <Card className="shadow-lg">
+                <Card className="bg-white/80 backdrop-blur-sm border-gray-200/50 hover:bg-white hover:shadow-lg transition-all duration-300">
                   <CardHeader>
-                    <CardTitle>Detailed Feedback</CardTitle>
-                    <CardDescription>Comprehensive feedback from evaluators</CardDescription>
+                    <CardTitle className="text-gray-800">Expert Feedback</CardTitle>
+                    <CardDescription className="text-gray-600">
+                      Comprehensive feedback from academic evaluators
+                    </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
-                    <div className="border-l-4 border-green-500 pl-4">
-                      <h4 className="font-medium text-green-700">Strengths</h4>
-                      <p className="text-gray-700 mt-1">
-                        Excellent use of visual aids and clear explanation of complex AI concepts. The interactive
-                        elements significantly enhance user engagement.
+                    <div className="p-4 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 hover:from-emerald-100 hover:to-teal-100 transition-all duration-300 group">
+                      <h4 className="font-medium text-emerald-700 mb-2 group-hover:text-emerald-600 transition-colors">
+                        Strengths
+                      </h4>
+                      <p className="text-gray-700 leading-relaxed">
+                        Exceptional work on developing a comprehensive AI ethics framework. The methodology is rigorous,
+                        the literature review is thorough, and the practical applications are well-articulated. The
+                        paper demonstrates deep understanding of both technical and ethical considerations in healthcare
+                        AI.
                       </p>
                     </div>
-                    <div className="border-l-4 border-orange-500 pl-4">
-                      <h4 className="font-medium text-orange-700">Areas for Improvement</h4>
-                      <p className="text-gray-700 mt-1">
-                        Consider adding more real-world examples and perhaps include a brief discussion on ethical
-                        implications of AI in education.
+                    <div className="p-4 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 hover:from-amber-100 hover:to-orange-100 transition-all duration-300 group">
+                      <h4 className="font-medium text-amber-700 mb-2 group-hover:text-amber-600 transition-colors">
+                        Areas for Enhancement
+                      </h4>
+                      <p className="text-gray-700 leading-relaxed">
+                        Consider expanding the discussion on implementation challenges in real-world healthcare
+                        settings. Additional case studies from different healthcare domains would strengthen the
+                        framework&apos;s applicability and provide more concrete examples.
                       </p>
                     </div>
-                    <div className="border-l-4 border-blue-500 pl-4">
-                      <h4 className="font-medium text-blue-700">General Comments</h4>
-                      <p className="text-gray-700 mt-1">
-                        Outstanding work overall! The video demonstrates deep understanding and innovative thinking.
-                        Keep up the excellent work.
+                    <div className="p-4 rounded-xl bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 hover:from-blue-100 hover:to-cyan-100 transition-all duration-300 group">
+                      <h4 className="font-medium text-blue-700 mb-2 group-hover:text-blue-600 transition-colors">
+                        Overall Assessment
+                      </h4>
+                      <p className="text-gray-700 leading-relaxed">
+                        This is outstanding research that makes significant contributions to the field of AI ethics in
+                        healthcare. The work is publication-ready and would be valuable for both academic and industry
+                        audiences. The interdisciplinary approach and practical focus are particularly commendable.
                       </p>
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Chat Support */}
-                <Card className="shadow-lg">
+                {/* Performance Summary */}
+                <Card className="bg-white/80 backdrop-blur-sm border-gray-200/50 hover:bg-white hover:shadow-lg transition-all duration-300">
                   <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <MessageSquare className="w-5 h-5 mr-2" />
-                      Support Chat
+                    <CardTitle className="flex items-center text-gray-800">
+                      <Award className="w-5 h-5 mr-2" />
+                      Performance Summary
                     </CardTitle>
-                    <CardDescription>Get help from our technical support team</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="bg-gray-50 rounded-lg p-4 mb-4 max-h-60 overflow-y-auto">
+                    <div className="grid md:grid-cols-4 gap-6">
+                      <div className="text-center p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+                        <div className="text-2xl font-bold text-emerald-600 mb-2">94.2</div>
+                        <div className="text-sm text-gray-600">Final Score</div>
+                      </div>
+                      <div className="text-center p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                        <div className="text-2xl font-bold text-blue-600 mb-2">#1</div>
+                        <div className="text-sm text-gray-600">Global Rank</div>
+                      </div>
+                      <div className="text-center p-4 bg-purple-50 border border-purple-200 rounded-xl">
+                        <div className="text-2xl font-bold text-purple-600 mb-2">96%</div>
+                        <div className="text-sm text-gray-600">Originality</div>
+                      </div>
+                      <div className="text-center p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                        <div className="text-2xl font-bold text-amber-600 mb-2">5.0</div>
+                        <div className="text-sm text-gray-600">Expert Rating</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Support Chat */}
+                <Card className="bg-white/80 backdrop-blur-sm border-gray-200/50 hover:bg-white hover:shadow-lg transition-all duration-300">
+                  <CardHeader>
+                    <CardTitle className="flex items-center text-gray-800">
+                      <MessageSquare className="w-5 h-5 mr-2" />
+                      Academic Support
+                    </CardTitle>
+                    <CardDescription className="text-gray-600">Get help from our academic support team</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="bg-gray-50 rounded-xl p-4 mb-4 max-h-60 overflow-y-auto border border-gray-200">
                       <div className="space-y-3">
                         <div className="flex justify-start">
-                          <div className="bg-white rounded-lg p-3 max-w-xs shadow-sm">
-                            <p className="text-sm">Hello! How can we help you today?</p>
-                            <span className="text-xs text-gray-500">Support Team • 2h ago</span>
+                          <div className="bg-white rounded-lg p-3 max-w-xs shadow-sm border border-gray-200">
+                            <p className="text-sm text-gray-800">
+                              Congratulations on your excellent submission! How can we assist you further?
+                            </p>
+                            <span className="text-xs text-gray-500">Academic Support • 2h ago</span>
                           </div>
                         </div>
                         <div className="flex justify-end">
-                          <div className="bg-blue-600 text-white rounded-lg p-3 max-w-xs">
-                            <p className="text-sm">I have a question about the evaluation criteria</p>
+                          <div className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white rounded-lg p-3 max-w-xs shadow-lg">
+                            <p className="text-sm">Thank you! I&apos;d like guidance on publication opportunities.</p>
                             <span className="text-xs text-blue-200">You • 1h ago</span>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="flex space-x-2">
-                      <Input placeholder="Type your message..." className="flex-1" />
-                      <Button>Send</Button>
+                      <Input
+                        placeholder="Type your message..."
+                        className="flex-1 bg-gray-50/50 border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-300"
+                      />
+                      <Button className="bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+                        Send
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
